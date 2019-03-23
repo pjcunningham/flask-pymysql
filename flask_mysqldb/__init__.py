@@ -1,5 +1,5 @@
-import MySQLdb
-from MySQLdb import cursors
+import pymysql
+from pymysql import cursors
 from flask import _app_ctx_stack, current_app
 
 
@@ -12,12 +12,12 @@ class MySQL(object):
 
     def init_app(self, app):
         """Initialize the `app` for use with this
-        :class:`~flask_mysqldb.MySQL` class.
+        :class:`~flask_pymysql.MySQL` class.
         This is called automatically if `app` is passed to
         :meth:`~MySQL.__init__`.
 
         :param flask.Flask app: the application to configure for use with
-            this :class:`~flask_mysqldb.MySQL` class.
+            this :class:`~flask_pymysql.MySQL` class.
         """
 
         app.config.setdefault('MYSQL_HOST', 'localhost')
@@ -78,7 +78,7 @@ class MySQL(object):
         if current_app.config['MYSQL_CURSORCLASS']:
             kwargs['cursorclass'] = getattr(cursors, current_app.config['MYSQL_CURSORCLASS'])
 
-        return MySQLdb.connect(**kwargs)
+        return pymysql.connect(**kwargs)
 
     @property
     def connection(self):

@@ -1,26 +1,23 @@
-Flask-MySQLdb
+Flask-pymysql
 ================
 
-[![Build Status](https://travis-ci.org/admiralobvious/flask-mysqldb.svg?branch=master)](https://travis-ci.org/admiralobvious/flask-mysqldb)
+A Hacky fork of Flask-MySQLdb, which uses pymysql.
 
-Flask-MySQLdb provides MySQL connection for Flask.
+Unlike Flask-MySQLdb, Flask-pymysql uses pymysql which is a pure python driver.
+This is a lot more portable than relying on a C binary which often needs to be compiled.
 
 Quickstart
 ----------
 
-First, install Flask-MySQLdb:
+First, install Flask-pymysql:
     
-    $ pip install flask-mysqldb
+    $ pip install flask-pymysql
     
-Flask-MySQLdb depends, and will install for you, recent versions of Flask
-(0.10.1 or later) and [mysqlclient](https://github.com/PyMySQL/mysqlclient-python). Flask-MySQLdb is compatible
-with and tested on Python 2.7, 3.4, 3.5 and 3.6.
-
 Next, add a ``MySQL`` instance to your code:
 
 ```python
 from flask import Flask
-from flask_mysqldb import MySQL
+from flask_pymysql import MySQL
 
 app = Flask(__name__)
 
@@ -42,15 +39,20 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-Other configuration directives can be found [here](http://flask-mysqldb.readthedocs.io/en/latest/#configuration).
 
 Why
 ---
-Why would you want to use this extension versus just using MySQLdb by itself? The only reason is that the extension was made using Flask's best pratices in relation to resources that need caching on the [app context](http://flask.pocoo.org/docs/0.12/appcontext/#context-usage). What that means is that the extension will manage creating and teardown the connection to MySQL for you while with if you were just using MySQLdb you would have to do it yourself.
+Why would you want to use this extension versus just using pymysql by itself?
+The only reason is that the extension was made using Flask's best pratices in relation to resources that need caching on the [app context](http://flask.pocoo.org/docs/0.12/appcontext/#context-usage).
+What that means is that the extension will manage creating and teardown the connection to MySQL for you while with if you were just using pymysql you would have to do it yourself.
 
 
 Resources
 ---------
 
-- [Documentation](http://flask-mysqldb.readthedocs.org/en/latest/)
-- [PyPI](https://pypi.python.org/pypi/Flask-MySQLdb)
+- [Documentation](http://flask-pymysql.readthedocs.org/en/latest/)
+- [PyPI](https://pypi.python.org/pypi/Flask-pymysql)
+
+ToDo
+----
+Add config parsing, no need to hard code user access credentials.
