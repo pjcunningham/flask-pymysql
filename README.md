@@ -1,19 +1,21 @@
 Flask-pymysql
 ================
 
-A Hacky fork of Flask-MySQLdb, which uses pymysql.
-
-Unlike Flask-MySQLdb, Flask-pymysql uses pymysql which is a pure python driver.
-This is a lot more portable than relying on a C binary which often needs to be compiled.
+Flask-pymysql is a fork of Flask-mysqldb, which instead uses the PyMySQL driver, which is a pure python driver.
 
 Changelog
 ---------
+
+### 0.2.3
+This version now uses a kwarg dict which is passed to PyMySQL, there is no longer a curated list of attributes.
+If you are migrating from Flask-mysqldb or and earlier version of Flask-pymysql, please see the example 'app.py',
+or the Quickstart section below on how to make a dict for 'pymysql_kwargs'.
 
 ### 0.2.2
 Fixing imports and references.
 
 ### 0.2.1
-Fork of Flask-MySQLdb first change to pymysql.
+Fork of Flask-MySQLdb first change to PyMySQL.
 
 
 Quickstart
@@ -23,7 +25,10 @@ First, install Flask-pymysql:
     
     $ pip install flask-pymysql
     
-Next, add a ``MySQL`` instance to your code:
+Next, add a ``MySQL`` instance to your code.
+The instance is configured using a dictionary of kwargs to pass to the PyMySQL connect class.
+The key is named 'pymysql_kwargs'.
+Please refer to the [PyMySQL documentation](https://pymysql.readthedocs.io/en/latest/modules/connections.html) for all options.
 
 ```python
 from flask import Flask
@@ -31,11 +36,11 @@ from flask_pymysql import MySQL
 
 app = Flask(__name__)
 
-app.config['MYSQL_USER'] = 'user'
-app.config['MYSQL_PASSWORD'] = 'password'
-app.config['MYSQL_DB'] = 'database'
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+pymysql_connect_kwargs = {'user': 'BlackKnight',
+                          'password': 'ILoveBridges',
+                          'host': '127.0.0.1'}
 
+app.config['pymysql_kwargs'] = pymysql_connect_kwargs
 mysql = MySQL(app)
 
 @app.route('/')
@@ -50,19 +55,8 @@ if __name__ == '__main__':
 ```
 
 
-Why
----
-Why would you want to use this extension versus just using pymysql by itself?
-The only reason is that the extension was made using Flask's best pratices in relation to resources that need caching on the [app context](http://flask.pocoo.org/docs/0.12/appcontext/#context-usage).
-What that means is that the extension will manage creating and teardown the connection to MySQL for you while with if you were just using pymysql you would have to do it yourself.
-
-
 Resources
 ---------
 
-- [Documentation](http://flask-pymysql.readthedocs.org/en/latest/)
 - [PyPI](https://pypi.python.org/pypi/Flask-pymysql)
-
-ToDo
-----
-Add config parsing, no need to hard code user access credentials.
+- [PyMySQL](https://github.com/PyMySQL/PyMySQL)

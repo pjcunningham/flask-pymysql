@@ -2,13 +2,13 @@
 Flask-pymysql
 ----------------
 
-pymysql extension for Flask
+PyMySQL extension for Flask, forked from Flask-mysqldb.
 """
 from setuptools import setup
 
 setup(
     name='Flask-pymysql',
-    version='0.2.2',
+    version='0.2.3',
     url='https://github.com/rcbensley/flask-pymysql',
     license='MIT',
     author='Richard Bensley',

@@ -20,27 +20,17 @@ class MySQL(object):
             this :class:`~flask_pymysql.MySQL` class.
         """
 
-        app.config.setdefault('MYSQL_HOST', 'localhost')
-        app.config.setdefault('MYSQL_USER', None)
-        app.config.setdefault('MYSQL_PASSWORD', None)
-        app.config.setdefault('MYSQL_DB', None)
-        app.config.setdefault('MYSQL_PORT', 3306)
-        app.config.setdefault('MYSQL_UNIX_SOCKET', None)
-        app.config.setdefault('MYSQL_CONNECT_TIMEOUT', 10)
-        app.config.setdefault('MYSQL_READ_DEFAULT_FILE', None)
-        app.config.setdefault('MYSQL_USE_UNICODE', True)
-        app.config.setdefault('MYSQL_CHARSET', 'utf8')
-        app.config.setdefault('MYSQL_SQL_MODE', None)
-        app.config.setdefault('MYSQL_CURSORCLASS', None)
-
         if hasattr(app, 'teardown_appcontext'):
             app.teardown_appcontext(self.teardown)
 
     @property
     def connect(self):
-        kwargs = current_app.config['pymysql_kwargs']
-        if 'cursorclass' in kwargs.keys():
-            kwargs['cursorclass'] = getattr(cursors, kwargs['cursorclass'])
+        if current_app.config['pymysql_kwargs']:
+            kwargs = current_app.config['pymysql_kwargs']
+            if 'cursorclass' in kwargs.keys():
+                kwargs['cursorclass'] = getattr(cursors, kwargs['cursorclass'])
+        else:
+            kwargs = dict()
 
         return pymysql.connect(**kwargs)
 
