@@ -2,6 +2,13 @@ from flask import Flask
 from flask_pymysql import MySQL
 
 app = Flask(__name__)
+
+connect_args = {'read_default_file': '~/.my.cnf',
+                'autocommit': True,
+                'cursorclass': 'DictCursor'}
+
+app.config['pymysql_kwargs'] = connect_args
+
 mysql = MySQL(app)
 
 
@@ -11,6 +18,7 @@ def users():
     cur.execute('''SELECT user, host FROM mysql.user''')
     rv = cur.fetchall()
     return str(rv)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

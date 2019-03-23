@@ -6,6 +6,16 @@ A Hacky fork of Flask-MySQLdb, which uses pymysql.
 Unlike Flask-MySQLdb, Flask-pymysql uses pymysql which is a pure python driver.
 This is a lot more portable than relying on a C binary which often needs to be compiled.
 
+Changelog
+---------
+
+### 0.2.2
+Fixing imports and references.
+
+### 0.2.1
+Fork of Flask-MySQLdb first change to pymysql.
+
+
 Quickstart
 ----------
 
