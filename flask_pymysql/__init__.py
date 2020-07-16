@@ -28,7 +28,8 @@ class MySQL(object):
         if current_app.config['pymysql_kwargs']:
             kwargs = current_app.config['pymysql_kwargs']
             if 'cursorclass' in kwargs.keys():
-                kwargs['cursorclass'] = getattr(cursors, kwargs['cursorclass'])
+                if isinstance(kwargs['cursorclass'], str):
+                    kwargs['cursorclass'] = getattr(cursors, kwargs['cursorclass'])
         else:
             kwargs = dict()
 
