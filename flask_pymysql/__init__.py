@@ -1,6 +1,10 @@
+import logging
+from types import SimpleNamespace
 import pymysql
 from pymysql import cursors
-from flask import _app_ctx_stack, current_app
+from flask import current_app, g
+
+logger = logging.getLogger(__name__)
 
 
 class MySQL(object):
@@ -43,13 +47,16 @@ class MySQL(object):
             unsuccessful.
         """
 
-        ctx = _app_ctx_stack.top
-        if ctx is not None:
-            if not hasattr(ctx, 'mysql_db'):
-                ctx.mysql_db = self.connect
-            return ctx.mysql_db
+        try:
+            g._mysql = SimpleNamespace()
+            g._mysql.connection = self.connect
+            logger.debug("Successfully created MySQL connection")
+            return g._mysql.connection
+        except Exception as ex:
+            logger.exception("Could not create MySQL connection", exc_info=ex)
+            return None
 
     def teardown(self, exception):
-        ctx = _app_ctx_stack.top
-        if hasattr(ctx, 'mysql_db'):
-            ctx.mysql_db.close()
+        if hasattr(g, '_mysql') and g._mysql.connection:
+            g._mysql.connection.close()
+            logger.debug("Successfully closed MySQL connection")
