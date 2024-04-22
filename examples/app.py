@@ -1,19 +1,20 @@
+import logging
+from os import environ
 from flask import Flask
 from flask_pymysql import MySQL
 
+logging.basicConfig(level=10, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
 app = Flask(__name__)
 
-# This example assumes a valid username and password are in the client section of a ~/.my.cnf file.
-# This is a well known standard for mysql/mariadb clients.
-# Example contents of ~/.my.cnf :
-# [client]
-# user = my_user_name
-# password = super_secret_password
-# This means your password is now not stored with your code!
-
-connect_args = {'read_default_file': '~/.my.cnf',
-                'autocommit': True,
-                'cursorclass': 'DictCursor'}
+connect_args = {
+    'user': environ['MYSQL_USERNAME'],
+    'password': environ['MYSQL_PASSWORD'],
+    'host': environ['MYSQL_HOST'],
+    'port': int(environ['MYSQL_PORT']),
+    'autocommit': True,
+    'cursorclass': 'DictCursor'
+}
 
 app.config['pymysql_kwargs'] = connect_args
 
