@@ -1,3 +1,5 @@
+# Updated to handle Flask >= 2.2.0
+
 Flask-pymysql
 ================
 
