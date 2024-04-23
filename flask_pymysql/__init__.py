@@ -51,7 +51,7 @@ class MySQL(object):
         try:
             g._mysql = SimpleNamespace()
             g._mysql.connection = self.connect
-            logger.debug("FLASK-PYMYSQL successfully created MySQL connection")
+            logger.debug("Successfully created MySQL connection")
             return g._mysql.connection
         except Exception as ex:
             logger.exception("Could not create MySQL connection", exc_info=ex)
@@ -60,4 +60,4 @@ class MySQL(object):
     def teardown(self, exception):
         if hasattr(g, '_mysql') and g._mysql.connection:
             g._mysql.connection.close()
-            logger.debug("FLASK-PYMYSQL successfully closed MySQL connection")
+            logger.debug("Successfully closed MySQL connection")
