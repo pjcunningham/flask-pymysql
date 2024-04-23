@@ -35,6 +35,7 @@ class MySQL(object):
                 if isinstance(kwargs['cursorclass'], str):
                     kwargs['cursorclass'] = getattr(cursors, kwargs['cursorclass'])
         else:
+            logger.error("Flask configuration key FLASK_PYMYSQL_KWARGS missing.")
             kwargs = dict()
 
         return pymysql.connect(**kwargs)
