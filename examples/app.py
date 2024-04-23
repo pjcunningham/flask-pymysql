@@ -7,7 +7,7 @@ logging.basicConfig(level=10, format='%(asctime)s - %(name)s - %(levelname)s - %
 
 app = Flask(__name__)
 
-connect_args = {
+flask_pymysql_kwargs = {
     'user': environ['MYSQL_USERNAME'],
     'password': environ['MYSQL_PASSWORD'],
     'host': environ['MYSQL_HOST'],
@@ -16,7 +16,7 @@ connect_args = {
     'cursorclass': 'DictCursor'
 }
 
-app.config['pymysql_kwargs'] = connect_args
+app.config['FLASK_PYMYSQL_KWARGS'] = flask_pymysql_kwargs
 
 mysql = MySQL(app)
 

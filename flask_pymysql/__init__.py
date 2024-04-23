@@ -29,8 +29,8 @@ class MySQL(object):
 
     @property
     def connect(self):
-        if current_app.config['pymysql_kwargs']:
-            kwargs = current_app.config['pymysql_kwargs']
+        if current_app.config['FLASK_PYMYSQL_KWARGS']:
+            kwargs = current_app.config['FLASK_PYMYSQL_KWARGS']
             if 'cursorclass' in kwargs.keys():
                 if isinstance(kwargs['cursorclass'], str):
                     kwargs['cursorclass'] = getattr(cursors, kwargs['cursorclass'])
@@ -50,7 +50,7 @@ class MySQL(object):
         try:
             g._mysql = SimpleNamespace()
             g._mysql.connection = self.connect
-            logger.debug("Successfully created MySQL connection")
+            logger.debug("FLASK-PYMYSQL successfully created MySQL connection")
             return g._mysql.connection
         except Exception as ex:
             logger.exception("Could not create MySQL connection", exc_info=ex)
@@ -59,4 +59,4 @@ class MySQL(object):
     def teardown(self, exception):
         if hasattr(g, '_mysql') and g._mysql.connection:
             g._mysql.connection.close()
-            logger.debug("Successfully closed MySQL connection")
+            logger.debug("FLASK-PYMYSQL successfully closed MySQL connection")

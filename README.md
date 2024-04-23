@@ -1,4 +1,5 @@
 # Updated to handle Flask >= 2.2.0
+The config key has been renamed to `FLASK_PYMYSQL_KWARGS`
 
 Flask-pymysql
 ================
